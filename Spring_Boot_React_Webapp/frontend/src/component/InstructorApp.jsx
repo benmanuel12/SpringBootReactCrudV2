@@ -8,7 +8,7 @@ class InstructorApp extends Component {
         return (
             <Router>
                 <>
-                    <h1>Instructor Application</h1>
+                    <h1>Unit Tracker</h1>
                     <Switch>
                         <Route path="/" exact component={ListUnitsComponent} />
                         <Route path="/units" exact component={ListUnitsComponent} />
