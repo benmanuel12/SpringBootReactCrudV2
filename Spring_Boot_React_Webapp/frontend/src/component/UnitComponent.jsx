@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import UnitDataService from '../service/UnitDataService';
 
-const INSTRUCTOR = 'in28minutes'
-
 class UnitComponent extends Component {
     constructor(props) {
         super(props)
@@ -38,7 +36,7 @@ class UnitComponent extends Component {
         if (!values.name) {
             errors.name = 'Enter a name'
         } else if (values.name.length < 5) {
-            errors.name = 'Enter atleast 5 Characters in name'
+            errors.name = 'Enter at least 5 Characters in name'
         }
 
         return errors
@@ -46,7 +44,6 @@ class UnitComponent extends Component {
     }
 
     onSubmit(values) {
-        let username = INSTRUCTOR
 
         let unit = {
             id: this.state.id,
@@ -82,7 +79,7 @@ class UnitComponent extends Component {
                         enableReinitialize={true}
                     >
                         {
-                            (props) => (
+                            () => (
                                 <Form>
                                     <ErrorMessage name="description" component="div"
                                         className="alert alert-warning" />

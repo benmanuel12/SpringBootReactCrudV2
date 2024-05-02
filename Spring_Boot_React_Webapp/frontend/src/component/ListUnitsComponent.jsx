@@ -36,7 +36,6 @@ class ListUnitsComponent extends Component {
                     this.refreshUnits()
                 }
             )
-
     }
 
     addUnitClicked() {
