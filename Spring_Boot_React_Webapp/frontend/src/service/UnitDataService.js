@@ -18,7 +18,7 @@ class UnitDataService {
         //console.log('executed service')
         return axios.delete(`${INSTRUCTOR_API_URL}/units/${id}`);
     }
-
+    
     updateUnit(id, unit) {
         //console.log('executed service')
         return axios.put(`${INSTRUCTOR_API_URL}/units/${id}`, unit);
@@ -26,7 +26,7 @@ class UnitDataService {
 
     createUnit(unit) {
         //console.log('executed service')
-        return axios.post(`${INSTRUCTOR_API_URL}/units/`, unit);
+        return axios.post(`${INSTRUCTOR_API_URL}/units`, unit);
     }
 }
 
