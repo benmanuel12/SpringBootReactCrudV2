@@ -48,11 +48,10 @@ class ListUnitsComponent extends Component {
     }
 
     render() {
-        console.log('render')
         return (
             <div className="container">
                 <h3>All Units</h3>
-                {this.state.message && <div class="alert alert-success">{this.state.message}</div>}
+                {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
                 <div className="container">
                     <table className="table">
                         <thead>

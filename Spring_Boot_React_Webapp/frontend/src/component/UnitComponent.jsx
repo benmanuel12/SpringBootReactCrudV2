@@ -35,8 +35,7 @@ class UnitComponent extends Component {
         let errors = {}
         if (!values.name) {
             errors.name = 'Enter a name'
-        } else if (values.name.length < 5) {
-            errors.name = 'Enter at least 5 Characters in name'
+            alert("Name cannot be empty")
         }
 
         return errors
@@ -48,7 +47,6 @@ class UnitComponent extends Component {
         let unit = {
             id: this.state.id,
             name: values.name,
-            targetDate: values.targetDate
         }
 
         if (this.state.id === -1) {
@@ -64,19 +62,19 @@ class UnitComponent extends Component {
 
     render() {
 
-        let { description, id } = this.state
+        let { id, name } = this.state
 
         return (
             <div>
                 <h3>Unit</h3>
                 <div className="container">
                     <Formik
-                        initialValues={{ id, description }}
+                        enableReinitialize={true}
+                        initialValues={{ id, name }}
                         onSubmit={this.onSubmit}
                         validateOnChange={false}
                         validateOnBlur={false}
                         validate={this.validate}
-                        enableReinitialize={true}
                     >
                         {
                             () => (
