@@ -35,8 +35,7 @@ class UnitComponent extends Component {
         let errors = {}
         if (!values.name) {
             errors.name = 'Enter a name'
-        } else if (values.name.length < 5) {
-            errors.name = 'Enter at least 5 Characters in name'
+            alert("Name cannot be empty")
         }
 
         return errors
