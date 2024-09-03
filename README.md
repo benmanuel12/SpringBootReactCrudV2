@@ -4,8 +4,6 @@ Practice application to link a PostgreSQL (or other) database to a React.js dash
 
 Initial boilerplate code generated with the in28minutes Spring Boot guide
 
-Note: if the branch adding_database exists and is not yet merged into the main branch, please view it to see updated database code. I am leaving the functional database-less code on main branch while I work on the database code.
-
 ### Running Examples
 - Download the zip or clone the Git repository.
 - Unzip the zip file (if you downloaded one)
