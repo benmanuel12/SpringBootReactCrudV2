@@ -4,6 +4,12 @@ Practice application to link a PostgreSQL (or other) database to a React.js dash
 
 Initial boilerplate code generated with the in28minutes Spring Boot guide
 
+## Built with
+Java, Spring Boot, React, PostgreSQL
+
+## Features
+- Allows for the creation, reading, updating and deletion of database entries through a page made with React.js
+
 ### Running Examples
 - Download the zip or clone the Git repository.
 - Unzip the zip file (if you downloaded one)
@@ -15,3 +21,6 @@ Initial boilerplate code generated with the in28minutes Spring Boot guide
 - Right Click on the file and Run as Java Application
 - You are all Set
   
+
+
+
