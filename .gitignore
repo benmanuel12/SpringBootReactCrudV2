@@ -98,3 +98,10 @@ node_modules
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 bin
+# Maven Wrapper - committed so the backend builds without installing Maven
+!mvnw
+!mvnw.cmd
+!.mvn
+
+# Vite build output
+dist

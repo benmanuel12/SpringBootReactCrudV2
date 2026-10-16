@@ -1,37 +1,33 @@
-import React, { Component } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import UnitDataService from '../service/UnitDataService';
 
-class UnitComponent extends Component {
-    constructor(props) {
-        super(props)
+function UnitComponent() {
+    // The id comes from the URL as a string, so "-1" means a new unit
+    const { id } = useParams()
+    const isNew = id === '-1'
+    const [name, setName] = useState('')
+    const navigate = useNavigate()
 
-        this.state = {
-            id: this.props.match.params.id,
-            name: ''
-        }
-
-        this.onSubmit = this.onSubmit.bind(this)
-        this.validate = this.validate.bind(this)
-
-    }
-
-    componentDidMount() {
-
-        console.log(this.state.id)
-
-        // eslint-disable-next-line
-        if (this.state.id == -1) {
+    useEffect(() => {
+        setName('')
+        if (isNew) {
             return
         }
 
-        UnitDataService.retrieveUnit(this.state.id)
-            .then(response => this.setState({
-                name: response.data.name
-            }))
-    }
+        // Ignore a response that arrives after the id has changed or the page has closed
+        let ignore = false
+        UnitDataService.retrieveUnit(id)
+            .then(response => {
+                if (!ignore) {
+                    setName(response.data.name)
+                }
+            })
+        return () => { ignore = true }
+    }, [id, isNew])
 
-    validate(values) {
+    function validate(values) {
         let errors = {}
         if (!values.name) {
             errors.name = 'Enter a name'
@@ -39,66 +35,57 @@ class UnitComponent extends Component {
         }
 
         return errors
-
     }
 
-    onSubmit(values) {
+    function onSubmit(values) {
+        // A new unit has no id yet, so the database generates one
+        let unit = isNew
+            ? { name: values.name }
+            : { id: id, name: values.name }
 
-        let unit = {
-            id: this.state.id,
-            name: values.name,
-        }
-
-        if (this.state.id === -1) {
+        if (isNew) {
             UnitDataService.createUnit(unit)
-                .then(() => this.props.history.push('/units'))
+                .then(() => navigate('/units'))
         } else {
-            UnitDataService.updateUnit(this.state.id, unit)
-                .then(() => this.props.history.push('/units'))
+            UnitDataService.updateUnit(id, unit)
+                .then(() => navigate('/units'))
         }
-
-        console.log(values);
     }
 
-    render() {
+    return (
+        <div>
+            <h3>Unit</h3>
+            <div className="container">
+                <Formik
+                    enableReinitialize={true}
+                    initialValues={{ id: isNew ? '' : id, name }}
+                    onSubmit={onSubmit}
+                    validateOnChange={false}
+                    validateOnBlur={false}
+                    validate={validate}
+                >
+                    {
+                        () => (
+                            <Form>
+                                <ErrorMessage name="description" component="div"
+                                    className="alert alert-warning" />
+                                <fieldset className="form-group">
+                                    <label>Id</label>
+                                    <Field className="form-control" type="text" name="id" disabled />
+                                </fieldset>
+                                <fieldset className="form-group">
+                                    <label>Name</label>
+                                    <Field className="form-control" type="text" name="name" />
+                                </fieldset>
+                                <button className="btn btn-success" type="submit">Save</button>
+                            </Form>
+                        )
+                    }
+                </Formik>
 
-        let { id, name } = this.state
-
-        return (
-            <div>
-                <h3>Unit</h3>
-                <div className="container">
-                    <Formik
-                        enableReinitialize={true}
-                        initialValues={{ id, name }}
-                        onSubmit={this.onSubmit}
-                        validateOnChange={false}
-                        validateOnBlur={false}
-                        validate={this.validate}
-                    >
-                        {
-                            () => (
-                                <Form>
-                                    <ErrorMessage name="description" component="div"
-                                        className="alert alert-warning" />
-                                    <fieldset className="form-group">
-                                        <label>Id</label>
-                                        <Field className="form-control" type="text" name="id" disabled />
-                                    </fieldset>
-                                    <fieldset className="form-group">
-                                        <label>Name</label>
-                                        <Field className="form-control" type="text" name="name" />
-                                    </fieldset>
-                                    <button className="btn btn-success" type="submit">Save</button>
-                                </Form>
-                            )
-                        }
-                    </Formik>
-
-                </div>
             </div>
-        )
-    }
+        </div>
+    )
 }
 
 export default UnitComponent

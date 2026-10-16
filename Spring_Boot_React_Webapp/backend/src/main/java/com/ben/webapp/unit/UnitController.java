@@ -2,6 +2,7 @@ package com.ben.webapp.unit;
 
 import java.util.Optional;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UnitController {
 
 	private final UnitRepository unitRepository;
-  
+
 	public UnitController(UnitRepository unitRepository) {
 	  this.unitRepository = unitRepository;
 	}
@@ -35,8 +36,13 @@ public class UnitController {
 
 	// Delete Unit By Id
 	@DeleteMapping("/units/{id}")
-	public void deleteUnitById(@PathVariable int id) {
+	public ResponseEntity<Void> deleteUnitById(@PathVariable int id) {
+		// deleteById no longer fails for a missing id, so check first
+		if (!this.unitRepository.existsById(id)) {
+			return ResponseEntity.notFound().build();
+		}
 		this.unitRepository.deleteById(id);
+		return ResponseEntity.ok().build();
 	}
 
 	// Update Unit by Id

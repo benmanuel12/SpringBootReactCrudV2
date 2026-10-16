@@ -5,22 +5,39 @@ Practice application to link a PostgreSQL (or other) database to a React.js dash
 Initial boilerplate code generated with the in28minutes Spring Boot guide
 
 ## Built with
-Java, Spring Boot, React, PostgreSQL
+Java 21, Spring Boot 4, React 19 (Vite), PostgreSQL
 
 ## Features
 - Allows for the creation, reading, updating and deletion of database entries through a page made with React.js
 
-### Running Examples
-- Download the zip or clone the Git repository.
-- Unzip the zip file (if you downloaded one)
-- Open Command Prompt and Change directory (cd) to folder containing pom.xml
-- Open Eclipse 
-   - File -> Import -> Existing Maven Project -> Navigate to the folder where you unzipped the zip
-   - Select the right project
-- Choose the Spring Boot Application file (search for @SpringBootApplication)
-- Right Click on the file and Run as Java Application
-- You are all Set
-  
+## Running the app
+
+### Prerequisites
+- JDK 21 or newer (Maven is not needed - the project includes the Maven Wrapper)
+- Node.js 22 or newer
+- PostgreSQL, with a database and user matching `backend/src/main/resources/application.properties`:
+  ```sql
+  CREATE USER ben WITH PASSWORD 'password';
+  CREATE DATABASE mydatabase OWNER ben;
+  ```
+
+### Backend (http://localhost:8080)
+```
+cd Spring_Boot_React_Webapp/backend
+./mvnw spring-boot:run
+```
+On Windows Command Prompt or PowerShell, use `mvnw.cmd` instead of `./mvnw`.
+
+### Frontend (http://localhost:3000)
+```
+cd Spring_Boot_React_Webapp/frontend
+npm install
+npm start
+```
+
+### Tests
+- Backend: `./mvnw test` (needs PostgreSQL running)
+- Frontend: `npm test`
 
 
 
